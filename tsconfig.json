@@ -12,5 +12,9 @@
     "rootDir": ".",
     "importHelpers": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*",
+    "examples/**/*",
+    "types/**/*"
+  ]
 }

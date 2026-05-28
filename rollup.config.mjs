@@ -6,7 +6,7 @@ import terser from '@rollup/plugin-terser';
 const production = process.env.NODE_ENV === 'production';
 
 export default {
-	input: 'src/main.ts',
+	input: 'examples/mx/timing-gate-message/main.ts',
 	output: {
 		file: 'frills.js', // Change to desired output
 		format: 'es',
