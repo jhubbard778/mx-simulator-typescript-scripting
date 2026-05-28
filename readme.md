@@ -38,6 +38,16 @@ npm run build
 
 This will bundle everything into a single output file ready to use in MX Simulator.
 
+## Minification
+
+Minification is optional and is only applied during a production build. Use `npm run build` during development for readable output, and `npm run build:prod` when you're ready to release:
+
+```bash
+npm run build:prod
+```
+
+This produces a minified output file via `@rollup/plugin-terser`, which is already included in the config.
+
 ## Auto-Build on Save
 
 Instead of running `npm run build` manually every time, you can have it rebuild automatically whenever you save a file.

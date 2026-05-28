@@ -1,6 +1,9 @@
 // rollup.config.js
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+
+const production = process.env.NODE_ENV === 'production';
 
 export default {
 	input: 'src/main.ts',
@@ -21,6 +24,7 @@ export default {
               }],
               ['@babel/preset-typescript'],
             ]
-        })
+        }),
+        production && terser()
     ]
 };
