@@ -117,11 +117,26 @@ This only triggers the build when files inside `src/` change, ignoring unrelated
 
 - **`src/main.ts`** — the entry point. This is where execution starts. Import your other modules here and write your top-level logic.
 - **`src/types/mx.d.ts`** — type declarations for MX Simulator's global `mx` API.
-- **`rollup.config.mjs`** — build configuration. You can customize the output file name here:
-
+- **`rollup.config.mjs`** — build configuration. You can customize the output file name and location here:
 ```js
 output: {
   file: 'dist/your-script-name.js', // change this to whatever you need
+  ...
+}
+```
+ 
+You can also point the output directly to your MX Simulator scripts/track folder so the file is ready to use immediately after every build, without manually copying it over:
+ 
+```js
+// Linux
+output: {
+  file: '/home/username/.mxsimulator/my-track/frills.js',
+  ...
+}
+ 
+// Windows
+output: {
+  file: 'C:/Users/username/AppData/local/MX Simulator/my-track/frills.js',
   ...
 }
 ```
