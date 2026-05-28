@@ -10,7 +10,9 @@
     "outDir": "dist",
     "lib": ["ES5", "ES2015"],
     "rootDir": ".",
-    "importHelpers": true
+    "importHelpers": true,
+    "allowJs": true,
+    "checkJs": true
   },
   "include": [
     "src/**/*",
