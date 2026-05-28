@@ -1,6 +1,8 @@
 # MX Simulator TypeScript Scripting
 
-A boilerplate for writing MX Simulator scripts in TypeScript, bundled down to ES5-compatible JavaScript for Duktape.
+A template for writing MX Simulator scripts in TypeScript, bundled down to ES5-compatible JavaScript for Duktape.
+
+Clone this repo as a starting point for your own script, write your logic in `src/main.ts`, and build it into a single JS file ready to drop into MX Simulator.
 
 ## Prerequisites
 
@@ -11,15 +13,24 @@ node -v
 npm -v
 ```
 
-## Setup
+## Getting Started
 
-Install dependencies:
+1. Clone the repo:
+
+```bash
+git clone https://github.com/jhubbard778/mx-simulator-typescript-scripting
+cd mx-simulator-typescript-scripting
+```
+
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-## Building
+3. Write your script in `src/main.ts`
+
+4. Build:
 
 ```bash
 npm run build
