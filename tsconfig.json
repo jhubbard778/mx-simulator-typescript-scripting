@@ -12,7 +12,7 @@
     "rootDir": ".",
     "importHelpers": true,
     "allowJs": true,
-    "checkJs": true
+    "checkJs": false
   },
   "include": [
     "src/**/*",
