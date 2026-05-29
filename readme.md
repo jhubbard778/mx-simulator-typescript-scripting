@@ -196,3 +196,30 @@ These are handled by Babel's transpilation and will work correctly:
 
 - Keep logic synchronous — there's no event loop or async runtime
 - Avoid large third-party npm packages; most assume a browser or Node environment and will reference unavailable globals
+
+## Using NPM Packages
+
+While excessively using large npm packages is advised against, you can use npm packages in your scripts. However, some packages rely on modern built-in methods that don't exist in Duktape's ES5 environment. When this happens you'll need to manually import the specific `core-js` polyfills the package requires.
+ 
+For example, using the `bad-words` package requires `Array.prototype.includes`, so you import just that polyfill at the top of your entry point:
+ 
+```ts
+import { Filter } from "bad-words";
+ 
+// Manually added core-js import for Array.prototype.includes()
+// in filter.isProfane() function
+import 'core-js/actual/array/includes';
+ 
+const chatFilter = (slot: number, message: string): Bit => {
+    const filter = new Filter();
+    if (filter.isProfane(message)) return 1;
+    return chatFilterPrev(slot, message);
+}
+ 
+var chatFilterPrev = mxserver.chat_handler;
+mxserver.chat_handler = chatFilter;
+```
+ 
+If a package fails at runtime, check what modern array or object methods it uses and import the matching `core-js` polyfill. The full list of available polyfills is on the [core-js npm page](https://www.npmjs.com/package/core-js).
+ 
+Avoid importing all of core-js at once — it adds thousands of lines to your script and makes debugging very difficult. Only import what you need.

@@ -1,5 +1,5 @@
-// rollup.config.js
 import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 
@@ -14,6 +14,7 @@ export default {
 	},
 	plugins: [
         resolve({ extensions: ['.ts', '.js'] }),
+        commonjs(),     // converts require() to ES modules so Rollup can inline them
         babel({
             babelHelpers: 'bundled',  // Inline helpers, no external dep needed
             extensions: ['.ts', '.js'],

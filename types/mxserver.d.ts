@@ -11,6 +11,9 @@ declare const mxserver: {
     /** Returns the status for the given slot as a string. */
     get_status(slotnumber: number): "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
 
+    /** Returns information about "slotnumber" as an object */
+    get_slot_info(slotnumber: number): SlotInfo;
+
     /** Returns a string containing the specified file. */
     file_to_string(filename: string): string;
 
@@ -53,9 +56,9 @@ declare const mxserver: {
     get_number(name: MXServerNumberArrayName, index: number): number;
 
     /** Returns the string associated with "name" with optional array index */
+    get_string<T extends MXServerStringArrayName>(name: T, index: number): MXServerStringArrayValues[T];
+    get_string(name: MXServerStringArrayName): MXServerStringArrayValues[MXServerStringArrayName][];
     get_string(name: MXServerStringName): string;
-    get_string(name: MXServerNumberArrayName): string[];
-    get_string(name: MXServerStringArrayName, index: number): string;
 
     /**
     * ###################################################
@@ -155,4 +158,12 @@ type MXServerNumberName = 'drop_time' | 'erode' | 'finish_laps' | 'finish_time'
 type MXServerNumberArrayName = 'finish_laps_list' | 'finish_time_list' | 'muted' | 'uid';
 
 type MXServerStringName = "track_dir" | "track_name";
-type MXServerStringArrayName = "bikeinfo" | "ignore" | "rank" | "status" | "track_list";
+type MXServerStringArrayValues = {
+    'bikeinfo': string;
+    'ignore': 'ALL' | 'SPECS' | 'NONE';
+    'rank': 'Nobody' | 'Marshal' | 'Admin';
+    'status': 'Empty' | 'Reserved' | 'Spectator' | 'Player' | 'Zombie';
+    'track_list': string;
+};
+
+type MXServerStringArrayName = keyof MXServerStringArrayValues;
