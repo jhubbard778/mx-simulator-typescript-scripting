@@ -525,6 +525,7 @@ type Mat3x3 = [
     number, number, number
 ]
 
+type Vec2 = [number, number];
 type Vec3 = [number, number, number];
 
 type Bit = 0 | 1;
