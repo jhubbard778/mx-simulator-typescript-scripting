@@ -1,0 +1,4 @@
+examples/** -linguist-documentation
+
+# Un-vendor .d.ts declaration files
+types/*.d.ts linguist-vendored=false linguist-language=TypeScript
