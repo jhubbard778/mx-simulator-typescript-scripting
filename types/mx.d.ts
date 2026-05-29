@@ -24,6 +24,9 @@ declare const mx: {
     /** The time since the session started in seconds. */
     seconds: number;
 
+    /** A random seed per session for repeatable random numbers */
+    seed: number;
+
     /**
     * ###################################################
     * Callback Functions
