@@ -8,7 +8,7 @@ const production = process.env.NODE_ENV === 'production';
 export default {
 	input: 'src/main.ts',
 	output: {
-		file: 'frills.js', // Change to desired output
+		file: 'dist/frills.js', // Change to desired output
 		format: 'es',
     strict: false
 	},

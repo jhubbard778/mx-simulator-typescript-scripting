@@ -18,5 +18,8 @@
     "src/**/*",
     "examples/**/*",
     "types/**/*"
+  ],
+  "exclude": [
+    "examples/**/dist/**/*"
   ]
 }

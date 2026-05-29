@@ -1,1 +1,0 @@
-mxserver.log("Hello world!");

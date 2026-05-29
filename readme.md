@@ -117,6 +117,7 @@ This only triggers the build when files inside `src/` change, ignoring unrelated
 
 - **`src/main.ts`** — the entry point. This is where execution starts. Import your other modules here and write your top-level logic.
 - **`src/types/mx.d.ts`** — type declarations for MX Simulator's global `mx` API.
+- **`src/types/mxserver.d.ts`** — type declarations for MX Simulator's global `mxserver` API.
 - **`rollup.config.mjs`** — build configuration. You can customize the output file name and location here:
 ```js
 output: {
