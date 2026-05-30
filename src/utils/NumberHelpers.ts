@@ -58,11 +58,11 @@ export const calculateDistance3d = (point1: Cartesian3d, point2: Cartesian3d): n
 export type Cartesian2d = { x: number, y: number }
 export type Cartesian3d = { x: number, y: number, z: number };
 
-export const arrayToCartesian2d = (array: [number, number]|Vec2): Cartesian2d => {
+export const arrayToCartesian2d = (array: Vec2): Cartesian2d => {
     return { x: array[0], y: array[1] };
 }
 
-export const arrayToCartesian3d = (array: [number, number, number]|Vec3): Cartesian3d => {
+export const arrayToCartesian3d = (array: Vec3): Cartesian3d => {
     return { x: array[0], y: array[1], z: array[2] }; 
 }
 
@@ -90,3 +90,27 @@ export const isPointInPolygon = (point: Cartesian2d, polygon: Cartesian2d[]): bo
     
     return inside;
 }
+
+export const getNumberSuffix = (num: number): string => {
+    const lastTwoDigits = num % 100;
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return "th";
+
+    switch (lastTwoDigits % 10) {
+        case 1:
+            return "st";
+        case 2:
+            return "nd";
+        case 3:
+            return "rd";
+        default:
+            return "th";
+    }
+}
+
+export const randomIntegerBetween = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export const randomNumberBetween = (min: number, max: number): number => {
+    return Math.random() * (max - min) + min
+};

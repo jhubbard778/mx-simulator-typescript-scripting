@@ -7,20 +7,26 @@ type FontCellCoords = {
 
 export class TextFont {
     textureId: number;
+    frame: number;
+    coords: Vec3[];
+
     xOffset: number;
     yOffset: number;
     xScale: number;
     yScale: number;
+
     width: number;
     height: number;
     lineHeight: number;
     overlap: number;
-    frame: number;
-    coords: Vec3[];
-    map?: Record<string, number>
 
+    supportedCharacters: string;
+    characterFallback: string;
+    map: Record<string, number>;
+    
     constructor(
         textureId: number,
+        frame: number,
         xOffset: number,
         yOffset: number,
         xScale: number,
@@ -29,80 +35,85 @@ export class TextFont {
         height: number,
         lineHeight: number,
         overlap: number,
-        frame: number,
         coords: Vec3[],
         characters: string,
         key: string
     ) {
         this.textureId = textureId;
+        this.frame = frame;
+        this.coords = coords;
+
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.xScale = xScale;
         this.yScale = yScale;
+        
         this.width = width;
         this.height = height;
         this.lineHeight = lineHeight;
         this.overlap = overlap;
-        this.frame = frame;
-        this.coords = coords;
-        this.makeFontCellMap(characters, key);
+
+        this.supportedCharacters = characters;
+        this.characterFallback = key;
+        this.map = this.makeFontCellMap(characters, key);
     }
 
     /**
     * Creates a font cell map that maps a character to its cell coordinate position in the font object
     * 
-    * Example: characters = ""
+    * Example used in comments:
+    *   characters = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-=+_[]\\|:;\"'<>/?,.~`0123456789"
+    *   key = *
     * 
-    * @param font The font to create the cell map for
     * @param characters The characters we want to allow for drawing
     * @param key The fallback character if an ascii character is not present (must be included in characters array)
     */
-    private makeFontCellMap(characters: string, key: string): void {
+    private makeFontCellMap(characters: string, key: string): Record<string, number> {
         if (!characters.includes(key)) {
             throw new Error("Could not find key in characters...failed to set up font cell map.");
         }
 
-        const fallbackCharacter = characters.indexOf(key);
-
+        /** fallbackCharacterIndex = characters.indexOf('*') = 33 */
+        const fallbackCharacterIndex = characters.indexOf(key);
         let map: Record<string, number> = {};
         
-        // for 128 characters set up map for all indexes needed equal to the fallback
+        // for the 128 ascii characters set up map for all indexes needed equal to the fallback
         // (the fallback is drawn when we get an unexpected character)
-        // map["!"] = 9
+        // map["a"] = 33
         for (let i = 0; i < 128; i++) {
-            map[String.fromCharCode(i)] = fallbackCharacter;
+            map[String.fromCharCode(i)] = fallbackCharacterIndex;
         }
     
         // map[characters[i]] = i
         // i = 0
-        // map[!] = 0;
+        // map["a"] = 0;
         // i = 1
-        // map["] = 1;
+        // map["b"] = 1;
         for (let i = 0; i < characters.length; i++) {
           map[characters[i]] = i;
         }
     
-        this.map = map;
+        return map;
     }
 
     private getFontCellCoords(character: string): FontCellCoords {
         // if character is not in the font map we created, notify
-        if (!this.map || !(character in this.map)) {
+        if (!(character in this.map)) {
           mx.message("Not in map " + character);
           return { x: 0, y: 0, width: 0 };
         }
         /* return the coords in our font variable
-        character = ','
-        font.coords[font.map[,]];
-        font.map[,] = 11;
-        font.coords[11] = [360, 0, 40] */
+            character = ','
+            font.coords[font.map[,]];
+            font.map[,] = 11;
+            font.coords[11] = [360, 0, 40]
+        */
         const coords = this.coords[this.map[character]];
         return { x: coords[0], y: coords[1], width: coords[2] };
     }
 
     /**
      * Calculates the length of the text to draw and (optionally) draws the text
-     * @param font The font we're drawing
      * @param startX 
      * @param startY 
      * @param textToDraw 
@@ -161,7 +172,6 @@ export class TextFont {
 
     /**
      * Draws the text "text" for font "font" at starting at position ("x", "y") with optional parameter for centering
-     * @param font The font to draw
      * @param x Starting position x
      * @param y Staring position y
      * @param text The text to draw

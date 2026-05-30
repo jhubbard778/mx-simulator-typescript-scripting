@@ -24,8 +24,10 @@ declare const mx: {
     /** The time since the session started in seconds. */
     seconds: number;
 
-    /** A random seed per session for repeatable random numbers */
-    seed: number;
+    /** A random seed per session for repeatable random numbers 
+     * Only available for snapshot versions 10-14-2023 and greater
+    */
+    seed?: number;
 
     /**
     * ###################################################
@@ -183,7 +185,7 @@ declare const mx: {
      * @param anim The animation object
      * @return The sequence index
      */
-    cache_pose_sequence(anim: Animation): number;
+    cache_pose_sequence(anim: MXSAnimation): number;
 
     /**
      * Poses the statue specified by "index".
@@ -507,14 +509,14 @@ declare const mx: {
     
 };
 
-type Animation = {
+type MXSAnimation = {
     frame_count: number;
     bone_count: number;
     rest_centers: number[];
-    poses: Pose[];
+    poses: MXSPose[];
 }
 
-type Pose = {
+type MXSPose = {
     centers: number[];
     rotations: number[];
 }

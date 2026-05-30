@@ -200,7 +200,7 @@ These are handled by Babel's transpilation and will work correctly:
 
 ## Using NPM Packages
 
-While excessively using large npm packages is advised against, you can use npm packages in your scripts. However, some packages rely on modern built-in methods that don't exist in Duktape's ES5 environment. When this happens you'll need to manually import the specific `core-js` polyfills the package requires.
+While using many npm packages is ill-advised, you can use npm packages in your scripts. However, some packages rely on modern built-in methods that don't exist in Duktape's ES5 environment. When this happens you'll need to manually import the specific `core-js` polyfills the package requires.
  
 For example, using the `bad-words` package requires `Array.prototype.includes`, so you import just that polyfill at the top of your entry point:
  
@@ -213,7 +213,10 @@ import 'core-js/actual/array/includes';
  
 const chatFilter = (slot: number, message: string): Bit => {
     const filter = new Filter();
-    if (filter.isProfane(message)) return 1;
+    if (filter.isProfane(message)) {
+      mxserver.send(slot, "You cannot use profanity in this server!");
+      return 1;
+    }
     return chatFilterPrev(slot, message);
 }
  
