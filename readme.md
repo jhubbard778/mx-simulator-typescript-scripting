@@ -227,3 +227,63 @@ mxserver.chat_handler = chatFilter;
 If a package fails at runtime, check what modern array or object methods it uses and import the matching `core-js` polyfill. The full list of available polyfills is on the [core-js npm page](https://www.npmjs.com/package/core-js).
  
 Avoid importing all of core-js at once — it adds thousands of lines to your script and makes debugging very difficult. Only import what you need.
+
+## Testing
+ 
+This template includes [Vitest](https://vitest.dev/) for testing your script logic. Tests run in Node rather than Duktape, so they're best suited for testing pure logic in isolation rather than in-engine behaviour.
+ 
+### Node Version
+ 
+Vitest requires a recent version of Node. If you're using [nvm](https://github.com/nvm-sh/nvm), a `.nvmrc` file is included in the repo — just run:
+ 
+```bash
+nvm use
+```
+ 
+To install and use the correct version.
+ 
+### Running Tests
+ 
+```bash
+npm run test
+```
+ 
+Or to run once without watch mode:
+ 
+```bash
+npm run test --run
+```
+ 
+### Writing Tests
+ 
+Place your test files in the `tests/` folder. The `mx` and `mxserver` globals are mocked in `tests/setup.ts` so they're available in all tests without importing anything.
+
+A basic test looks like:
+ 
+```ts
+// tests/my-feature.test.ts
+import { myFunction } from '../src/my-feature';
+ 
+describe('myFunction', () => {
+    it('should do something', () => {
+        expect(myFunction()).toBe(true);
+    });
+});
+```
+ 
+### Mocking the MX API
+ 
+The `tests/setup.ts` file mocks the game's global API so your logic can be tested without the game running.
+Add any additional `mx` or `mxserver` methods you need to mock here as you use them. You can also override mocks per test using `vi.mocked()`:
+ 
+```ts
+it('should handle empty running order', () => {
+    vi.mocked(mx.get_running_order).mockReturnValueOnce([]);
+    // ...
+});
+```
+ 
+### Tsconfig
+ 
+The `tests/` folder has its own `tsconfig.json` that extends the root config but targets `ESNext` instead of `ES5`, since tests run in Node and don't need to be transpiled down for Duktape. This means you can use modern syntax freely in your tests.
+

@@ -5,24 +5,29 @@
  * @returns a time string
  */
 export const timeToString = (time: number): string => {
-  let brokenTime = breakTime(time);
+    const isNegative = time < 0;
+    let brokenTime = breakTime(Math.abs(time));
 
-  let s = leftFillString(brokenTime.min.toString(), " ", 0) + ":";
-  s += leftFillString(brokenTime.sec.toString(), "0", 2) + ".";
-  s += leftFillString(brokenTime.ms.toString(), "0", 3);
+    let s = leftFillString(brokenTime.min.toString(), " ", 0) + ":";
+    s += leftFillString(brokenTime.sec.toString(), "0", 2) + ".";
+    s += leftFillString(brokenTime.ms.toString(), "0", 3);
 
-  return s;
+    if (isNegative) {
+        s = `-${s}`;
+    }
+
+    return s;
 }
 
 const breakTime = (time: number): { min: number, sec: number, ms: number } => {
-  let ms = Math.floor(time * 1000.0);
-  let sec = Math.floor(ms / 1000);
-  let min = Math.floor(sec / 60);
+    let ms = Math.floor(time * 1000.0);
+    let sec = Math.floor(ms / 1000);
+    let min = Math.floor(sec / 60);
 
-  ms -= sec * 1000;
-  sec -= min * 60;
+    ms -= sec * 1000;
+    sec -= min * 60;
 
-  return { min: min, sec: sec, ms: ms };
+    return { min: min, sec: sec, ms: ms };
 }
 
 const leftFillString = (string: string, pad: string, n: number): string => {
@@ -105,6 +110,10 @@ export const getNumberSuffix = (num: number): string => {
         default:
             return "th";
     }
+}
+
+export const getNumberWithSuffix = (num: number): string => {
+    return `${num}${getNumberSuffix(num)}`;
 }
 
 export const randomIntegerBetween = (min: number, max: number): number => {

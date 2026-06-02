@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "types": ["vitest/globals", "node"]
+  },
+  "include": [
+    "./**/*",
+    "../src/**/*",
+    "../types/**/*"
+  ]
+}
