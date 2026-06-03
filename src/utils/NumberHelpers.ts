@@ -79,10 +79,50 @@ const getEdgeXAtY = (a: Cartesian2d, b: Cartesian2d, y: number): number => {
     return ((b.x - a.x) * (y - a.y) / (b.y - a.y)) + a.x;
 }
 
-export const isPointInPolygon = (point: Cartesian2d, polygon: Cartesian2d[]): boolean => {
+const isPointOnSegment = (point: Cartesian2d, a: Cartesian2d, b: Cartesian2d): boolean => {
+    const crossProduct = (point.y - a.y) * (b.x - a.x) - (point.x - a.x) * (b.y - a.y);
+    if (Math.abs(crossProduct) > Number.EPSILON) return false;
+
+    const minX = Math.min(a.x, b.x);
+    const maxX = Math.max(a.x, b.x);
+    const minY = Math.min(a.y, b.y);
+    const maxY = Math.max(a.y, b.y);
+
+    return point.x >= minX
+        && point.x <= maxX
+        && point.y >= minY
+        && point.y <= maxY;
+}
+
+/**
+ * Determines if a point is sitting on the edge of a polgyon
+ * @param point The point to check
+ * @param polygon The polygon points
+ * @returns boolean
+ */
+export const isPointOnPolygonEdge = (point: Cartesian2d, polygon: Cartesian2d[]): boolean => {
+    // foreach edge, check if point lies on that edge
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; i++) {
+        if (isPointOnSegment(point, polygon[i], polygon[j])) return true;
+        j = i;
+    }
+
+    return false;
+}
+
+/**
+ * Determines if a point is inside a polygon
+ * @param point The point to check
+ * @param polygon The polygon points
+ * @param countEdgeAsInside Boolean flag to count point as inside if the point lies on an edge
+ * @returns boolean
+ */
+export const isPointInPolygon = (point: Cartesian2d, polygon: Cartesian2d[], countEdgeAsInside: boolean = true): boolean => {
+    if (countEdgeAsInside && isPointOnPolygonEdge(point, polygon)) return true;
+
     let inside = false;
 
-    for (let i = 0, j = polygon.length; i < polygon.length; i++) {
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; i++) {
         const a = polygon[i];
         const b = polygon[j];
 

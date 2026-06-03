@@ -27,11 +27,15 @@ export const ANSIColorMap: Partial<Record<Colors, string>> = {
 
 export const brandRegExps = [
     { re: /^crf?[0-9]+/, color: Colors.Red },
+    { re: /^rs[0-9]+cr/, color: Colors.Red },
     { re: /^fc[0-9]+/, color: Colors.White },
     { re: /^kx[0-9]+/, color: Colors.Green },
+    { re: /^rs[0-9]+kx/, color: Colors.Green },
     { re: /^[0-9]+sx/, color: Colors.Orange },
     { re: /^rmz?[0-9]+/, color: Colors.Yellow },
+    { re: /^rs[0-9]+rm/, color: Colors.Yellow },
     { re: /^yz[0-9]+/, color: Colors.Blue },
+    { re: /^rs[0-9]+yz/, color: Colors.Blue },
     { re: /./, color: Colors.Normal },
 ] as const;
 
