@@ -11,3 +11,7 @@ test('get running order called', () => {
     }]);
     expect(mx.get_running_order).toHaveBeenCalled();
 });
+
+test('max slots value correct', () => {
+    expect(mx.max_slots).toBe(160);
+});

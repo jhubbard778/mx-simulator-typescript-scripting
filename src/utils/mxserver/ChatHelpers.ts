@@ -16,7 +16,7 @@ export const sendMessageToAllPlayers = (slotSender: number, message: string): vo
     for (let slot = 0; slot < mxserver.max_slots; slot++) {
         if (mxserver.get_status(slot) !== "Player") {
             mxserver.send(slot, message);
-            return;
+            continue;
         }
 
         // If player and ignoring all, do not send
