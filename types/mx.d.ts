@@ -26,6 +26,7 @@ declare const mx: {
 
     /** A random seed per session for repeatable random numbers 
      * Only available for snapshot versions 10-14-2023 and greater
+     * 16 bit unsigned int
     */
     seed?: number;
 
