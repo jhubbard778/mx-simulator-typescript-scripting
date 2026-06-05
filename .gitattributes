@@ -1,6 +1,0 @@
-examples/** -linguist-documentation
-
-examples/**/dist/** -linguist-vendored
-
-# Un-vendor .d.ts declaration files
-types/*.d.ts -linguist-vendored
