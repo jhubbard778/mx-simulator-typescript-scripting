@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker/locale/en";
+import { allBikeModels } from "../src/utils/BikeHelpers";
 import { randomIntegerBetween, randomNumberBetween } from "../src/utils/NumberHelpers";
 
 const mxMock = {
@@ -51,7 +53,7 @@ const mxMock = {
 
     // Misc functions
     gate_from_timing_position: vi.fn(),
-    get_bike_model: vi.fn(),
+    get_bike_model: vi.fn().mockImplementation(() => faker.helpers.arrayElement(allBikeModels)),
     get_camera_location: vi.fn(),
     get_elevation: vi.fn(),
     get_finish_laps: vi.fn(),
@@ -96,6 +98,12 @@ const mxMock = {
         time: 0
     }]),
 };
+
+beforeEach(() => {
+    const seed = randomIntegerBetween(0, Math.pow(2, 16) - 1);
+    faker.seed(seed);
+    mxMock.seed = seed;
+});
 
 (global as any).mx = mxMock;
 
