@@ -1,6 +1,6 @@
 declare const mxserver: {
     /** This is the maximum number of slots compiled into the server. */
-    max_slots: number;
+    readonly max_slots: number;
 
     /** Returns the UID for the given slot number as a number. */
     get_uid(slotnumber: number): number;
@@ -12,7 +12,7 @@ declare const mxserver: {
     get_status(slotnumber: number): "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
 
     /** Returns information about "slotnumber" as an object */
-    get_slot_info(slotnumber: number): SlotInfo;
+    get_slot_info(slotnumber: number): Readonly<SlotInfo>;
 
     /** Returns a string containing the specified file. */
     file_to_string(filename: string): string;

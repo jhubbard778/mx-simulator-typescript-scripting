@@ -65,8 +65,8 @@ export const bikeDynoToBikeModels = (bike: BikeDynoName, outputType: OutputBikeM
     if (!years) return [bike];
 
     return years.map((year) => {
-        return outputType === "skin" ? `${bike}v${year}`
-            : `${bike}(${year})`;
+        const bikeWithYear = `${bike}(${year})`;
+        return outputType === "skin" ? bikeModelGameToSkin(bikeWithYear) : bikeWithYear;
     });
 }
 
@@ -109,7 +109,14 @@ export const getLatestBikeModelForDyno = (bike: BikeDynoName, outputType: Output
     const latestYear = getLatestYearForDyno(bike);
     if (!latestYear) return bike;
 
-    return outputType === "skin"
-        ? `${bike}v${latestYear}`
-        : `${bike}(${latestYear})`;
+    const bikeWithYear = `${bike}(${latestYear})`;
+    return outputType === "skin" ? bikeModelGameToSkin(bikeWithYear) : bikeWithYear;
+}
+
+export const bikeModelGameToSkin = (bike: string): string => {
+    return bike.replace(/\(([0-9]+)\)$/, "v$1")
+}
+
+export const bikeSkinToModelGame = (bike: string): string => {
+    return bike.replace(/v([0-9]+)$/, "($1)")
 }

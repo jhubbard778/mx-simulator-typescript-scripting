@@ -7,28 +7,28 @@ declare const mx: {
     */
 
     /** The maximum number of slots. */
-    max_slots: number;
+    readonly max_slots: number;
 
     /** The number of gates in the first lap. */
-    first_lap_length: number;
+    readonly first_lap_length: number;
     
     /**  The number of gates in any lap after lap 1. */
-    normal_lap_length: number;
+    readonly normal_lap_length: number;
 
     /** The number of seconds in a game tic. Currently 0.0078125 (1/128). */
-    seconds_per_tic: number;
+    readonly seconds_per_tic: number;
 
     /** The number of physics steps in a second. Currently 128. */
-    tics_per_second: number;
+    readonly tics_per_second: number;
 
     /** The time since the session started in seconds. */
-    seconds: number;
+    readonly seconds: number;
 
     /** A random seed per session for repeatable random numbers 
      * Only available for snapshot versions 10-14-2023 and greater
      * 16 bit unsigned int
     */
-    seed?: number;
+    readonly seed?: number;
 
     /**
     * ###################################################
@@ -506,7 +506,7 @@ declare const mx: {
      *  "position" - the number of gates passed,
      *  "time" - the time when the last gate was hit in seconds.
     */
-    get_running_order(): RunningOrderPlayer[];
+    get_running_order(): ReadonlyArray<RunningOrderPlayer>;
     
 };
 
