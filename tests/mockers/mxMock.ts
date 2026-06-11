@@ -55,7 +55,7 @@ export const mxMock = {
 
     // Misc functions
     gate_from_timing_position: vi.fn().mockImplementation((index: number): number => {
-        return (index - firstLapLength) % normalLapLength
+        return index % (normalLapLength + firstLapLength);
     }),
     get_bike_model: vi.fn().mockImplementation(() => faker.helpers.arrayElement(allBikeModels)),
     get_camera_location: vi.fn().mockImplementation((p: number[], r: number[]) => {
@@ -79,15 +79,69 @@ export const mxMock = {
     get_finish_laps: vi.fn().mockReturnValue(faker.number.int({min: 2, max: 4})),
     get_finish_time: vi.fn().mockReturnValue(faker.number.int({min: 2, max: 4})),
     
-    get_front_contact_depth: vi.fn(),
-    get_front_contact_position: vi.fn(),
-    get_front_contact_slip: vi.fn(),
-    get_front_contact_velocity: vi.fn(),
+    get_front_contact_depth: vi.fn().mockImplementation(() => faker.number.int({min: -64, max: 128})),
+    get_front_contact_position: vi.fn().mockImplementation((slot: number, p: number[]): Bit => {
+        const position = [
+            faker.number.int({ min: 0, max: 2048 }),
+            faker.number.int({ min: 0, max: 256 }),
+            faker.number.int({ min: 0, max: 2048 })
+        ];
 
-    get_rear_contact_depth: vi.fn(),
-    get_rear_contact_position: vi.fn(),
-    get_rear_contact_slip: vi.fn(),
-    get_rear_contact_velocity: vi.fn(),
+        p.splice(0, p.length, ...position);
+        return 1;
+    }),
+    get_front_contact_slip: vi.fn().mockImplementation((slot: number, v: number[]): Bit => {
+        const velocity = [
+            faker.number.int({ min: 0, max: 75 }),
+            faker.number.int({ min: 0, max: 25 }),
+            faker.number.int({ min: 0, max: 75 })
+        ];
+
+        v.splice(0, v.length, ...velocity);
+        return 1;
+    }),
+    get_front_contact_velocity: vi.fn().mockImplementation((slot: number, v: number[]): Bit => {
+        const velocity = [
+            faker.number.int({ min: 0, max: 75 }),
+            faker.number.int({ min: 0, max: 25 }),
+            faker.number.int({ min: 0, max: 75 })
+        ];
+
+        v.splice(0, v.length, ...velocity);
+        return 1;
+    }),
+
+    get_rear_contact_depth: vi.fn().mockImplementation(() => faker.number.int({min: -64, max: 128})),
+    get_rear_contact_position: vi.fn().mockImplementation((slot: number, p: number[]): Bit => {
+        const position = [
+            faker.number.int({ min: 0, max: 2048 }),
+            faker.number.int({ min: 0, max: 256 }),
+            faker.number.int({ min: 0, max: 2048 })
+        ];
+
+        p.splice(0, p.length, ...position);
+        return 1;
+    }),
+    get_rear_contact_slip: vi.fn().mockImplementation((slot: number, v: number[]): Bit => {
+        const velocity = [
+            faker.number.int({ min: 0, max: 75 }),
+            faker.number.int({ min: 0, max: 25 }),
+            faker.number.int({ min: 0, max: 75 })
+        ];
+
+        v.splice(0, v.length, ...velocity);
+        return 1;
+    }),
+    get_rear_contact_velocity: vi.fn().mockImplementation((slot: number, v: number[]): Bit => {
+        const velocity = [
+            faker.number.int({ min: 0, max: 75 }),
+            faker.number.int({ min: 0, max: 25 }),
+            faker.number.int({ min: 0, max: 75 })
+        ];
+
+        v.splice(0, v.length, ...velocity);
+        return 1;
+    }),
 
     get_gate_drop_time: vi.fn().mockReturnValue(faker.number.float({min: 8, max: 14})),
     get_player_slot: vi.fn().mockImplementation(() => faker.number.int({min: 0, max: 39})),
