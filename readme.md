@@ -169,16 +169,18 @@ These are handled by Babel's transpilation and will work correctly:
 
 ## Using NPM Packages
 
-While using npm packages is ill-advised, you can use a select few npm packages in your scripts. Reason being that some packages rely on modern built-in methods that don't exist in Duktape's ES5 environment. When this happens you'll need to manually import the specific `core-js` polyfills the package requires.
- 
-For example, using the `bad-words` package requires `Array.prototype.includes`, so you import just that polyfill at the top of your entry point:
- 
+Using npm packages in Duktape scripts is generally not advised. Most packages are written for browser or Node.js environments and will reference globals like window, document, process, or globalThis that simply don't exist in Duktape — causing runtime errors that can be hard to debug.
+
+If you do find a package that is pure vanilla JavaScript with no browser or Node dependencies, it may work, but you will likely still need to manually write polyfills for any modern built-in methods it relies on (see Adding Polyfills). Using core-js for this is not recommended either — it is also built targeting browser and Node environments and can introduce the same DOM-dependent code that causes issues in Duktape.
+
+The safest approach is to implement the logic you need directly in your script rather than relying on npm packages.
+
+For example, using the `bad-words` package requires `Array.prototype.includes`, so you need to create that polyfill and then add it to `entry.ts`.
+
+> Note that the `includes` polyfill already exists in this template. This is for example purposes.
+
 ```ts
 import { Filter } from "bad-words";
- 
-// Manually added core-js import for Array.prototype.includes()
-// in filter.isProfane() function
-import 'core-js/actual/array/includes';
  
 const chatFilter = (slot: number, message: string): Bit => {
     const filter = new Filter();
@@ -192,13 +194,25 @@ const chatFilter = (slot: number, message: string): Bit => {
 var chatFilterPrev = mxserver.chat_handler;
 mxserver.chat_handler = chatFilter;
 ```
- 
-If a package fails at runtime, check what modern array or object methods it uses and import the matching `core-js` polyfill. The full list of available polyfills is on the [core-js npm page](https://www.npmjs.com/package/core-js).
 
-Sometimes core-js isn't reliable, reason being is because it was built for the DOM and Node engines and not necessarily supported for something like the Duktape engine. 
- 
-Using an NPM package is not guaranteed to work. For that reason, please try to not use them.
+```ts
+// src/polyfills/array.ts
+if (!Array.prototype.includes) {
+    Array.prototype.includes = function (searchElement: any, fromIndex?: number): boolean {
+        for (let i = fromIndex ?? 0; i < this.length; i++) {
+            if (this[i] === searchElement) return true;
+        }
 
+        return false;
+    }
+}
+```
+
+```ts
+// src/entry.ts
+import "./polyfills/array";
+```
+ 
 ## Testing
  
 This template includes [Vitest](https://vitest.dev/) for testing your script logic. Tests run in Node rather than Duktape, so they're best suited for testing pure logic in isolation rather than in-engine behaviour.
