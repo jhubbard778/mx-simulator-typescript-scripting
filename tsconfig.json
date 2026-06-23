@@ -15,7 +15,10 @@
     "rootDir": ".",
     "importHelpers": false,
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
     "src/**/*",

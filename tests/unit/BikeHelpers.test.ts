@@ -1,4 +1,4 @@
-import { bikeDynoToBikeModels, bikeModelToDyno, getHomologationString, getLatestBikeModelForDyno, getYearsForDyno } from "../../src/utils/BikeHelpers";
+import { bikeDynoToBikeModels, bikeModelToDyno, getHomologationString, getLatestBikeModelForDyno, getYearsForDyno } from "@/utils/BikeHelpers";
 
 describe('bike dyno to years', () => {
     it('should return null when given bike without years', () => {

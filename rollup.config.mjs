@@ -1,9 +1,13 @@
+import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
+import resolveRollup from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const production = process.env.NODE_ENV === 'production';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
 	input: 'src/entry.ts',
@@ -13,7 +17,12 @@ export default {
     strict: false
 	},
 	plugins: [
-        resolve({ extensions: ['.ts', '.js'] }),
+        alias({
+          entries: [
+            { find: '@', replacement: resolve(__dirname, './src') }
+          ]
+        }),
+        resolveRollup({ extensions: ['.ts', '.js'] }),
         commonjs(),     // converts require() to ES modules so Rollup can inline them
         babel({
             babelHelpers: 'bundled',  // Inline helpers, no external dep needed

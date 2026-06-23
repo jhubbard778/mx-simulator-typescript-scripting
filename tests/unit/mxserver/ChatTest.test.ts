@@ -1,4 +1,4 @@
-import { sendMessageToAllPlayers } from "../../../src/utils/mxserver/ChatHelpers";
+import { sendMessageToAllPlayers } from "@/utils/mxserver/ChatHelpers";
 
 test('send message to all players', () => {
     sendMessageToAllPlayers(0, "Hello world!");

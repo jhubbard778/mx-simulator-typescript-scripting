@@ -1,9 +1,5 @@
+import { arrayToCartesian2d, arrayToCartesian3d, Cartesian2d, getNumberWithSuffix, isInteger, isPointInPolygon, isPointOnPolygonEdge, timeToString } from '@/utils/NumberHelpers';
 import { expect, test } from 'vitest';
-import {
-  arrayToCartesian2d, arrayToCartesian3d, Cartesian2d,
-  getNumberWithSuffix, isInteger, isPointInPolygon, isPointOnPolygonEdge,
-  timeToString
-} from '../../src/utils/NumberHelpers.js';
 
 test('test number suffixes', () => {
   const testCases = {

@@ -1,4 +1,4 @@
-import { Colors, getBrandColor } from "../../src/utils/ColorHelpers";
+import { Colors, getBrandColor } from "@/utils/ColorHelpers";
 
 describe('brand colors to enum', () => {
     it('should be red for honda', () => {
