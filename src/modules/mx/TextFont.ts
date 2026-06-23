@@ -69,7 +69,7 @@ export class TextFont {
     * @param key The fallback character if an ascii character is not present (must be included in characters array)
     */
     private makeFontCellMap(characters: string, key: string): Record<string, number> {
-        if (!characters.includes(key)) {
+        if (characters.indexOf(key) === -1) {
             throw new Error("Could not find key in characters...failed to set up font cell map.");
         }
 

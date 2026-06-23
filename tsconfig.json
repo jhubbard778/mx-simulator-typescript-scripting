@@ -17,7 +17,8 @@
     "allowJs": true,
     "checkJs": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@test/*": ["./tests/*"]
     }
   },
   "include": [
