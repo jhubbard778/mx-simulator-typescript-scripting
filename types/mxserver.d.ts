@@ -50,15 +50,14 @@ declare const mxserver: {
 
     /** Returns the number associated with "name" with optional array index
      * @remarks For `"erode"`, the returned value is 1024x the inputted value.
+     * @remarks `"finish_time"` and related time args always return the value in game tic seconds
     */
     get_number(name: MXServerNumberName): number;
-    get_number(name: MXServerNumberArrayName): number[];
-    get_number(name: MXServerNumberArrayName, index: number): number;
+    get_number(name: MXServerNumberArrayName, index?: number): number;
 
     /** Returns the string associated with "name" with optional array index */
-    get_string<T extends MXServerStringArrayName>(name: T, index: number): MXServerStringArrayValues[T];
-    get_string(name: MXServerStringArrayName): MXServerStringArrayValues[MXServerStringArrayName][];
     get_string(name: MXServerStringName): string;
+    get_string(name: MXServerStringArrayName, index?: number): MXServerStringArrayValues[MXServerStringArrayName];
 
     /**
     * ###################################################

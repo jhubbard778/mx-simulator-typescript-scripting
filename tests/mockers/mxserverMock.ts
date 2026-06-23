@@ -1,5 +1,5 @@
-import { allBikeModels, bikeModelGameToSkin } from "@/utils/BikeHelpers";
 import { faker } from "@faker-js/faker/locale/en";
+import { allBikeModels, bikeModelGameToSkin } from "../../src/utils/BikeHelpers";
 
 const firstLapLength = faker.number.int({min: 7, max: 34});
 const normalLapLength = faker.number.int({min: 26, max: 50});
@@ -87,8 +87,7 @@ export const mxserverMock = {
           return index !== undefined ? arr[index] : arr;
         }) as {
           (name: MXServerNumberName): number;
-          (name: MXServerNumberArrayName): number[];
-          (name: MXServerNumberArrayName, index: number): number;
+          (name: MXServerNumberArrayName, index?: number): number;
         },
     get_string: vi.fn(<T extends MXServerStringArrayName>(
           name: MXServerStringName | MXServerStringArrayName,
@@ -101,8 +100,7 @@ export const mxserverMock = {
           const arr = serverData.stringArrays[name as T];
           return index !== undefined ? arr[index] : arr;
         }) as {
-          <T extends MXServerStringArrayName>(name: T, index: number): MXServerStringArrayValues[T];
-          (name: MXServerStringArrayName): MXServerStringArrayValues[MXServerStringArrayName][];
+          <T extends MXServerStringArrayName>(name: T, index?: number): MXServerStringArrayValues[T];
           (name: MXServerStringName): string;
         },
 
