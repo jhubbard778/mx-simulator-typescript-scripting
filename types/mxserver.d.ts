@@ -54,11 +54,13 @@ declare const mxserver: {
     */
     get_number(name: MXServerNumberName): number;
     get_number(name: MXServerNumberNameTics): MXTics;
-    get_number(name: MXServerNumberArrayName, index?: number): MXServerNumberArrayValues[MXServerNumberArrayName];
+    get_number<T extends MXServerNumberArrayName>(name: T, index: number): MXServerNumberArrayValues[T];
+    get_number<T extends MXServerNumberArrayName>(name: T): MXServerNumberArrayValues[T];
 
     /** Returns the string associated with "name" with optional array index */
     get_string(name: MXServerStringName): string;
-    get_string(name: MXServerStringArrayName, index?: number): MXServerStringArrayValues[MXServerStringArrayName];
+    get_string<T extends MXServerStringArrayName>(name: T): MXServerStringArrayValues[T];
+    get_string<T extends MXServerStringArrayName>(name: T, index: number): MXServerStringArrayValues[T];
 
     /**
     * ###################################################
