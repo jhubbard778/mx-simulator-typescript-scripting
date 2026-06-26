@@ -53,7 +53,8 @@ declare const mxserver: {
      * @remarks `"finish_time"` and related time args always return the value in game tic seconds
     */
     get_number(name: MXServerNumberName): number;
-    get_number(name: MXServerNumberArrayName, index?: number): number;
+    get_number(name: MXServerNumberNameTics): MXTics;
+    get_number(name: MXServerNumberArrayName, index?: number): MXServerNumberArrayValues[MXServerNumberArrayName];
 
     /** Returns the string associated with "name" with optional array index */
     get_string(name: MXServerStringName): string;
@@ -85,7 +86,7 @@ declare const mxserver: {
      * @param position The client's position in the timing array
      * @param time The time in 1/128 second race time tics in which the client hit the gate
      */
-    timing_handler: (slotnumber: number, position: number, time: number) => void;
+    timing_handler: (slotnumber: number, position: number, time: MXTics) => void;
 
     /**
      * This is called when an info packet is received from a client and
@@ -150,11 +151,19 @@ type SlotInfo = {
     ping: number;
 }
 
-type MXServerNumberName = 'drop_time' | 'erode' | 'finish_laps' | 'finish_time'
-    | 'first_lap_length' | 'gate_count' | 'holeshot_index' | 'max_slots' | 'normal_lap_length'
-    | 'race_time' | 'track_count' | 'ping';
+type MXServerNumberName = 'erode' | 'finish_laps' | 'first_lap_length'
+    | 'gate_count' | 'holeshot_index' | 'max_slots'
+    | 'normal_lap_length' | 'track_count' | 'ping';
+
+type MXServerNumberNameTics = 'drop_time' | 'finish_time' | 'race_time';
 
 type MXServerNumberArrayName = 'finish_laps_list' | 'finish_time_list' | 'muted' | 'uid';
+type MXServerNumberArrayValues = {
+    'finish_laps_list': number;
+    'finish_time_list': MXTics;
+    'muted': number;
+    'uid': number;
+}
 
 type MXServerStringName = "track_dir" | "track_name";
 type MXServerStringArrayValues = {
@@ -166,3 +175,5 @@ type MXServerStringArrayValues = {
 };
 
 type MXServerStringArrayName = keyof MXServerStringArrayValues;
+
+type MXTics = number & { readonly __brand: "MXTics" };
