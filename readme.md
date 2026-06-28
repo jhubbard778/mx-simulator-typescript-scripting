@@ -91,19 +91,38 @@ output: {
 
 ## Adding Polyfills
 Polyfills are located in `src/polyfills/` and are automatically included in every build via `src/entry.ts` — you don't need to import them manually in your code.
+### Included Polyfills
  
+The following polyfills are included out of the box:
+ 
+| Method | Category |
+|---|---|
+| `Array.prototype.includes` | Array |
+| `Array.prototype.flatMap` | Array |
+| `Array.prototype.flat` | Array |
+| `Array.prototype.find` | Array |
+| `Array.prototype.findIndex` | Array |
+| `Array.prototype.fill` | Array |
+| `Object.entries` | Object |
+| `Object.values` | Object |
+| `Object.getOwnPropertyDescriptors` | Object |
+| `Object.fromEntries` | Object |
+| `String.prototype.trimStart` | String |
+| `String.prototype.trimEnd` | String |
+
 To add a new polyfill:
  
 1. Create or edit a file in `src/polyfills/` (e.g. `src/polyfills/array.ts`):
 ```ts
 // src/polyfills/array.ts
 if (!Array.prototype.includes) {
-    Array.prototype.includes = function(value: any): boolean {
-        for (var i = 0; i < this.length; i++) {
-            if (this[i] === value) return true;
+    Array.prototype.includes = function (searchElement: any, fromIndex?: number): boolean {
+        for (let i = fromIndex ?? 0; i < this.length; i++) {
+            if (this[i] === searchElement) return true;
         }
+
         return false;
-    };
+    }
 }
 ```
  
@@ -112,6 +131,7 @@ if (!Array.prototype.includes) {
 // src/entry.ts
 import './polyfills/array';
 import './polyfills/object'; // add more as needed
+
 import './main';
 ```
  
@@ -124,6 +144,8 @@ import './main';
 ```
  
 Only add lib entries for methods you have actually polyfilled — this ensures TypeScript won't suggest methods that don't exist in Duktape at runtime.
+
+Alternatively, if you don't feel like polyfilling the entire library, you can hand pick and copy the type definitions into a file inside `types/polyfills/`.
 
 ## ES5 / Duktape Considerations
 
@@ -140,7 +162,7 @@ MX Simulator uses [Duktape](https://duktape.org/), a lightweight ES5-compatible 
 | `Promise` | Not available unless the game exposes it |
 | Generators (`function*`) | Not safely transpilable to ES5 |
 | `eval` with dynamic imports | Unpredictable in a sandboxed engine |
-| DOM / browser APIs | Not available — only what `mx` exposes |
+| DOM / browser APIs | Not available — only what `mx` or `mxserver` exposes |
 
 ### Fine to Use
 

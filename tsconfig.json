@@ -11,7 +11,10 @@
     "lib": [
       "ES5",
       "ES2016.Array.Include", // Manually polyfilled in polyfills/array.ts
-      "ES2019.Array"
+      "ES2019.Array",
+      "ES2017.Object",
+      "ES2019.Object",
+      "ES2019.String"
     ],
     "rootDir": ".",
     "importHelpers": false,

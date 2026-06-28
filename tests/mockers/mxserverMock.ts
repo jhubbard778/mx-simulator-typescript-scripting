@@ -1,3 +1,4 @@
+import { ticsPerSecond } from "@/utils/mxserver/TicConversions";
 import { faker } from "@faker-js/faker/locale/en";
 import { allBikeModels, bikeModelGameToSkin } from "../../src/utils/BikeHelpers";
 
@@ -6,7 +7,7 @@ const normalLapLength = faker.number.int({min: 26, max: 50});
 
 const serverData = {
     numbers: {
-        drop_time: faker.number.float({min: 8, max: 14}),
+        drop_time: faker.number.float({min: 8, max: 14}) * ticsPerSecond,
         erode: 0, // Note: get_number returns 1024x this value
         finish_laps: faker.number.int({min: 2, max: 4}),
         finish_time: faker.helpers.arrayElement([10, 15, 20, 25, 30]),
@@ -18,7 +19,7 @@ const serverData = {
         race_time: faker.number.float({min: 0, max: 3600}),
         track_count: 1,
         ping: faker.number.int({min: 40, max: 120})
-    } satisfies Record<MXServerNumberName, number>,
+    } satisfies Record<MXServerNumberName|MXServerNumberNameTics, number>,
 
     numberArrays: {
       finish_laps_list: [],
