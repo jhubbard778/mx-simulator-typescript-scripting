@@ -145,7 +145,7 @@ import './main';
  
 Only add lib entries for methods you have actually polyfilled — this ensures TypeScript won't suggest methods that don't exist in Duktape at runtime.
 
-Alternatively, if you don't feel like polyfilling the entire library, you can hand pick and copy the type definitions into a file inside `types/polyfills/`.
+Alternatively, if you don't feel like polyfilling the entire library, you can hand pick and copy the type definitions into a file inside `types/polyfills/`. See the [Typescript Source](https://github.com/microsoft/TypeScript/tree/main/src/lib) for library components to copy/paste type defs.
 
 ## ES5 / Duktape Considerations
 
