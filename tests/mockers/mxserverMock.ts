@@ -1,6 +1,6 @@
+import { allBikeModels, bikeModelGameToSkin } from "@/utils/BikeHelpers";
 import { ticsPerSecond } from "@/utils/mxserver/TicConversions";
 import { faker } from "@faker-js/faker/locale/en";
-import { allBikeModels, bikeModelGameToSkin } from "../../src/utils/BikeHelpers";
 
 const firstLapLength = faker.number.int({min: 7, max: 34});
 const normalLapLength = faker.number.int({min: 26, max: 50});

@@ -1,0 +1,97 @@
+interface NumberConstructor {
+    /**
+     * The value of Number.EPSILON is the difference between 1 and the smallest value greater than 1
+     * that is representable as a Number value, which is approximately:
+     * 2.2204460492503130808472633361816 x 10‍−‍16.
+     */
+    readonly EPSILON: number;
+
+    /**
+     * Returns true if passed value is finite.
+     * Unlike the global isFinite, Number.isFinite doesn't forcibly convert the parameter to a
+     * number. Only finite values of the type number, result in true.
+     * @param number A numeric value.
+     */
+    isFinite(number: unknown): boolean;
+
+    /**
+     * Returns true if the value passed is an integer, false otherwise.
+     * @param number A numeric value.
+     */
+    isInteger(number: unknown): boolean;
+
+    /**
+     * Returns a Boolean value that indicates whether a value is the reserved value NaN (not a
+     * number). Unlike the global isNaN(), Number.isNaN() doesn't forcefully convert the parameter
+     * to a number. Only values of the type number, that are also NaN, result in true.
+     * @param number A numeric value.
+     */
+    isNaN(number: unknown): boolean;
+
+    /**
+     * Returns true if the value passed is a safe integer.
+     * @param number A numeric value.
+     */
+    isSafeInteger(number: unknown): boolean;
+
+    /**
+     * The value of the largest integer n such that n and n + 1 are both exactly representable as
+     * a Number value.
+     * The value of Number.MAX_SAFE_INTEGER is 9007199254740991 2^53 − 1.
+     */
+    readonly MAX_SAFE_INTEGER: number;
+
+    /**
+     * The value of the smallest integer n such that n and n − 1 are both exactly representable as
+     * a Number value.
+     * The value of Number.MIN_SAFE_INTEGER is −9007199254740991 (−(2^53 − 1)).
+     */
+    readonly MIN_SAFE_INTEGER: number;
+
+    /**
+     * Converts a string to a floating-point number.
+     * @param string A string that contains a floating-point number.
+     */
+    parseFloat(string: string): number;
+
+    /**
+     * Converts A string to an integer.
+     * @param string A string to convert into a number.
+     * @param radix A value between 2 and 36 that specifies the base of the number in `string`.
+     * If this argument is not supplied, strings with a prefix of '0x' are considered hexadecimal.
+     * All other strings are considered decimal.
+     */
+    parseInt(string: string, radix?: number): number;
+}
+
+interface String {
+    /**
+     * Returns true if searchString appears as a substring of the result of converting this
+     * object to a String, at one or more positions that are
+     * greater than or equal to position; otherwise, returns false.
+     * @param searchString search string
+     * @param position If position is undefined, 0 is assumed, so as to search all of the String.
+     */
+    includes(searchString: string, position?: number): boolean;
+
+    /**
+     * Returns true if the sequence of elements of searchString converted to a String is the
+     * same as the corresponding elements of this object (converted to a String) starting at
+     * endPosition – length(this). Otherwise returns false.
+     */
+    endsWith(searchString: string, endPosition?: number): boolean;
+
+    /**
+     * Returns a String value that is made from count copies appended together. If count is 0,
+     * the empty string is returned.
+     * @param count number of copies to append
+     */
+    repeat(count: number): string;
+
+    /**
+     * Returns true if the sequence of elements of searchString converted to a String is the
+     * same as the corresponding elements of this object (converted to a String) starting at
+     * position. Otherwise returns false.
+     */
+    startsWith(searchString: string, position?: number): boolean;
+}

@@ -1,5 +1,6 @@
-import "./polyfills/array";
-import "./polyfills/object";
-import "./polyfills/string";
+import "@/polyfills/array";
+import "@/polyfills/number";
+import "@/polyfills/object";
+import "@/polyfills/string";
 
-import "./main";
+import "@/main";
