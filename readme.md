@@ -109,6 +109,15 @@ The following polyfills are included out of the box:
 | `Object.fromEntries` | Object |
 | `String.prototype.trimStart` | String |
 | `String.prototype.trimEnd` | String |
+| `Number.EPSILON` | Number |
+| `Number.MAX_SAFE_INTEGER` | Number |
+| `Number.MIN_SAFE_INTEGER` | Number |
+| `Number.isFinite` | Number |
+| `Number.isInteger` | Number |
+| `Number.isSafeInteger` | Number |
+| `Number.isNaN` | Number |
+| `Number.parseFloat` | Number |
+| `Number.parseInt` | Number |
 
 To add a new polyfill:
  
