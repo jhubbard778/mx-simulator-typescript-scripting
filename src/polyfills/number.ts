@@ -23,21 +23,27 @@ if (!Number.MIN_SAFE_INTEGER) {
 }
 
 if (!Number.isFinite) {
-    Number.isFinite = function(value: any): boolean {
+    Number.isFinite = function(value: unknown): boolean {
         return typeof value === 'number' && isFinite(value);
     }
 }
 
 if (!Number.isInteger) {
-  Number.isInteger = function(value: any): boolean {
+  Number.isInteger = function(value: unknown): boolean {
     return Number.isFinite(value)
-        && Math.floor(value) === value;
+        && Math.floor(value as number) === value;
   };
 }
 
 if (!Number.isSafeInteger) {
-    Number.isSafeInteger = function(value: any): boolean {
-        return Number.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER;
+    Number.isSafeInteger = function(value: unknown): boolean {
+        return Number.isInteger(value) && Math.abs(value as number) <= Number.MAX_SAFE_INTEGER;
+    }
+}
+
+if (!Number.isNaN) {
+    Number.isNaN = function(value: unknown): boolean {
+        return typeof value === 'number' && isNaN(value);
     }
 }
 
