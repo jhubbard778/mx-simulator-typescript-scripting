@@ -1,7 +1,7 @@
 # MX Simulator TypeScript Scripting
 
 
-A template for writing MX Simulator scripts in TypeScript or JavaScript, bundled down to ES5-compatible JavaScript for Duktape.
+A template for writing MX Simulator scripts in TypeScript or JavaScript, bundled down to ES5-compatible JavaScript for [Duktape](https://github.com/svaarala/duktape).
  
 Clone this repo as a starting point for your own script, write your logic in `src/main.ts`, and build it into a single JS file ready to drop into MX Simulator. Includes type declarations for the `mx` and `mxserver` APIs, giving you full autocomplete and inline documentation whether you're using TypeScript or JavaScript.
 
@@ -17,7 +17,7 @@ npm -v
 
 ## Getting Started
 
-1. Clone the repo:
+1. Clone or [Fork](/jhubbard778/mxserver-elim-script/fork) the repo:
 
 ```bash
 git clone https://github.com/jhubbard778/mx-simulator-typescript-scripting
@@ -138,10 +138,10 @@ if (!Array.prototype.includes) {
 2. Import it in `src/entry.ts`:
 ```ts
 // src/entry.ts
-import './polyfills/array';
-import './polyfills/object'; // add more as needed
+import '@/polyfills/array';
+import '@/polyfills/object'; // add more as needed
 
-import './main';
+import '@/main';
 ```
  
 3. Add the corresponding lib entry to `tsconfig.json` so TypeScript knows the method is available:
@@ -222,7 +222,7 @@ const chatFilter = (slot: number, message: string): Bit => {
     return chatFilterPrev(slot, message);
 }
  
-var chatFilterPrev = mxserver.chat_handler;
+const chatFilterPrev = mxserver.chat_handler;
 mxserver.chat_handler = chatFilter;
 ```
 
@@ -241,7 +241,7 @@ if (!Array.prototype.includes) {
 
 ```ts
 // src/entry.ts
-import "./polyfills/array";
+import "@/polyfills/array";
 ```
  
 ## Testing
@@ -278,7 +278,7 @@ A basic test looks like:
  
 ```ts
 // tests/my-feature.test.ts
-import { myFunction } from '../src/my-feature';
+import { myFunction } from '@/my-feature';
  
 describe('myFunction', () => {
     it('should do something', () => {
