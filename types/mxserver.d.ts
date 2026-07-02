@@ -27,7 +27,7 @@ declare const mxserver: {
     system(string: string): void;
 
     /** This runs an "at" command.
-     * E.g. mxserver.schdedule_command("at +10 broadcast Hello, world!") */
+     * E.g. mxserver.schedule_command("at +10 broadcast Hello, world!") */
     schedule_command(commandline: string): void;
 
     /** Broadcasts a message on the server. */
