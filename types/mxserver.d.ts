@@ -147,6 +147,7 @@ type SlotInfo = {
     wheelskin: string;
     helmetskin: string;
     uid: number;
+    number: string;
     name: string;
     status: "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
     rank: "Nobody" | "Marshal" | "Admin",
