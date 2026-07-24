@@ -55,6 +55,7 @@ export const mxserverMock = {
             bikeskin: bikeModelGameToSkin(bike),
             helmetskin: "",
             name: faker.person.fullName(),
+            number: faker.number.int({ min: 1, max: 999 }).toString(),
             ping: faker.number.int({min: 40, max: 120}),
             rank: faker.helpers.arrayElement(["Admin", "Marshal", "Nobody"]),
             riderskin: "",
