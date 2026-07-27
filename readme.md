@@ -50,6 +50,43 @@ npm run build:prod
 
 This produces a minified output file via `@rollup/plugin-terser`, which is already included in the config.
 
+#### Server Script Minification
+In the case of server scripts, if you have multiple scripts running on the server they will all exist in one context. Consider the following example with 2 global variables
+
+```js
+// js/script1.js
+var a = function () {
+  mxserver.log("Hello from script 1");
+}
+
+mxserver.second_handler = a
+```
+
+```js
+// js/script2.js
+var a = function () {
+  mxserver.log("Hello from script 2");
+}
+```
+
+```
+// stdout
+Hello from script 2
+```
+
+Using standard tersing would cause these conflicts to happen regularly because it doesn't have context of the other scripts. This can break logic and functionality of your scripts. For server script tersing, add the following config options to your `rollup.config.mjs` to remove mangling of variable and function names.
+
+```js
+// rollup.config.mjs
+export default {
+  // ...
+  plugins: [
+    // ...
+    production && terser({ mangle: false })
+  ]
+}
+```
+
 ## Using Plain JavaScript
 
 Everything in this setup works with plain `.js` files too — you don't have to use TypeScript. To convert `main.ts` to JavaScript:
