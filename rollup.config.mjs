@@ -13,7 +13,7 @@ export default {
 	input: 'src/entry.ts',
 	output: {
 		file: 'dist/frills.js', // Change to desired output
-		format: 'es',
+		format: 'iife',
     strict: false
 	},
 	plugins: [
