@@ -1,0 +1,6 @@
+dir=locust
+longname=Locust
+firstlap=15
+normallap=16
+gatecount=40
+hash=bb81638614aca5841ae38dfc46ec9c491c0f9653

@@ -1,35 +1,35 @@
-import { allBikeModels, bikeModelGameToSkin } from "@/utils/BikeHelpers";
-import { ticsPerSecond } from "@/utils/mxserver/TicConversions";
+import { MXTicConverter } from "@/utils/mxserver/TicConversions";
 import { faker } from "@faker-js/faker/locale/en";
+import { emptySlotInfo, MAX_SLOTS, mockPlayers, mockTrackData } from "./mockServerData";
 
 const firstLapLength = faker.number.int({min: 7, max: 34});
 const normalLapLength = faker.number.int({min: 26, max: 50});
 
 const serverData = {
     numbers: {
-        drop_time: faker.number.float({min: 8, max: 14}) * ticsPerSecond,
+        drop_time: faker.number.float({min: 8, max: 14}) * MXTicConverter.ticsPerSecond,
         erode: 0, // Note: get_number returns 1024x this value
-        finish_laps: faker.number.int({min: 2, max: 4}),
-        finish_time: faker.helpers.arrayElement([10, 15, 20, 25, 30]),
+        finish_laps: mockTrackData[0].laps,
+        finish_time: MXTicConverter.minutesToTics(mockTrackData[0].time),
         first_lap_length: firstLapLength,
         gate_count: firstLapLength + normalLapLength,
         holeshot_index: faker.number.int({min: 1, max: 5}),
-        max_slots: 160,
+        max_slots: MAX_SLOTS,
         normal_lap_length: normalLapLength,
-        race_time: faker.number.float({min: 0, max: 3600}),
-        track_count: 1,
+        race_time: faker.number.int({ min: 0, max: mockTrackData[0].time }) * MXTicConverter.ticsPerSecond as MXTics,
+        track_count: mockTrackData.length,
         ping: faker.number.int({min: 40, max: 120})
     } satisfies Record<MXServerNumberName|MXServerNumberNameTics, number>,
 
     numberArrays: {
-      finish_laps_list: [],
-      finish_time_list: [],
+      finish_time_list: mockTrackData.map((data) => MXTicConverter.minutesToTics(data.time)),
+      finish_laps_list: mockTrackData.map((data) => data.laps),
       muted: [],
       uid: [],
     } satisfies Record<MXServerNumberArrayName, number[]>,
     
     strings: {
-      track_dir: 'trackinfo/waterloo.trackinfo',
+      track_dir: 'waterloo',
       track_name: 'Waterloo Valley',
     } satisfies Record<MXServerStringName, string>,
 
@@ -38,34 +38,36 @@ const serverData = {
       ignore: [] as Array<'ALL' | 'SPECS' | 'NONE'>,
       rank: [] as Array<'Nobody' | 'Marshal' | 'Admin'>,
       status: [] as Array<'Empty' | 'Reserved' | 'Spectator' | 'Player' | 'Zombie'>,
-      track_list: [] as string[],
+      track_list: mockTrackData.map((data) => data.trackinfo),
     } satisfies { [K in MXServerStringArrayName]: MXServerStringArrayValues[K][] },  
 }
 
 export const mxserverMock = {
-    max_slots: 160,
+    max_slots: MAX_SLOTS,
 
-    get_uid: vi.fn().mockImplementation(() => faker.number.int({min: 1, max: 60000})),
-    get_rank: vi.fn().mockImplementation(() => faker.helpers.arrayElement(["Nobody", "Marshal", "Admin"])),
-    get_status: vi.fn().mockImplementation(() => faker.helpers.arrayElement(["Empty", "Reserved", "Spectator", "Player", "Zombie"])),
-    get_slot_info: vi.fn().mockImplementation((): SlotInfo => {
-        const bike = faker.helpers.arrayElement(allBikeModels);
-        return {
-            bike: bike,
-            bikeskin: bikeModelGameToSkin(bike),
-            helmetskin: "",
-            name: faker.person.fullName(),
-            number: faker.number.int({ min: 1, max: 999 }).toString(),
-            ping: faker.number.int({min: 40, max: 120}),
-            rank: faker.helpers.arrayElement(["Admin", "Marshal", "Nobody"]),
-            riderskin: "",
-            status: faker.helpers.arrayElement(["Reserved", "Spectator", "Player", "Zombie"]),
-            uid: faker.number.int({min: 1, max: 60000}),
-            wheelskin: ""
-        }
+    get_uid: vi.fn().mockImplementation((slot: number): number => {
+      if (slot < 0 || slot >= mockPlayers.length) return 0;
+      return mockPlayers[slot].uid;
+    }),
+    get_rank: vi.fn().mockImplementation((slot: number) => {
+      if (slot < 0 || slot >= mockPlayers.length) return 0;
+      return mockPlayers[slot].rank;
+    }),
+    get_status: vi.fn().mockImplementation((slot: number): SlotStatus => {
+        if (slot < 0 || slot >= mockPlayers.length) return "Empty";
+        return mockPlayers[slot].status;
+    }),
+    get_slot_info: vi.fn().mockImplementation((slot: number): SlotInfo => {
+        if (slot < 0 || slot >= mockPlayers.length) return emptySlotInfo;
+        return mockPlayers[slot];
     }),
 
-    file_to_string: vi.fn().mockReturnValue(""),
+    file_to_string: vi.fn().mockImplementation((filename: string): string => {
+        const trackData = mockTrackData.find((data) => data.trackinfo === filename);
+        if (trackData) return trackData.trackinfo_content;
+    
+        return '';
+    }),
     string_to_file: vi.fn(),
     append_string_to_file: vi.fn(),
 
@@ -123,6 +125,8 @@ export const mxserverMock = {
     ready_handler: vi.fn(),
     script_message_handler: vi.fn()
 };
+
+export const getMockServerData = () => serverData;
 
 export const setMockServerData = (overrides: {
   numbers?: Partial<typeof serverData.numbers>;

@@ -1,19 +1,21 @@
-export const ticsPerSecond = 128;
+export class MXTicConverter {
+    public static readonly ticsPerSecond = 128;
 
-export const ticsToMinutes = (tics: MXTics, floored: boolean = false): number => {
-    const conv = ticsToSeconds(tics, false) / 60;
-    return floored ? Math.floor(conv) : conv;
-}
+    static ticsToMinutes(tics: MXTics, floored: boolean = false): number {
+        const conv = this.ticsToSeconds(tics, false) / 60;
+        return floored ? Math.floor(conv) : conv;
+    }
 
-export const ticsToSeconds = (tics: MXTics, floored: boolean = false): number => {
-    const conv = tics / ticsPerSecond;
-    return floored ? Math.floor(conv) : conv;
-}
+    static ticsToSeconds(tics: MXTics, floored: boolean = false): number {
+        const conv = tics / this.ticsPerSecond;
+        return floored ? Math.floor(conv) : conv;
+    }
 
-export const minutesToTics = (minutes: number): MXTics => {
-    return secondsToTics(minutes * 60);
-}
+    static minutesToTics(minutes: number): MXTics {
+        return this.secondsToTics(minutes * 60);
+    }
 
-export const secondsToTics = (seconds: number): MXTics => {
-    return (seconds * ticsPerSecond) as MXTics;
+    static secondsToTics(seconds: number): MXTics {
+        return (seconds * this.ticsPerSecond) as MXTics;
+    }
 }

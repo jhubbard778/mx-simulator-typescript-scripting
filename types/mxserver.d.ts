@@ -6,10 +6,10 @@ declare const mxserver: {
     get_uid(slotnumber: number): number;
 
     /** Returns the rank for the given slot as a string. */
-    get_rank(slotnumber: number): "Nobody" | "Marshal" | "Admin";
+    get_rank(slotnumber: number): SlotRank;
 
     /** Returns the status for the given slot as a string. */
-    get_status(slotnumber: number): "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
+    get_status(slotnumber: number): SlotStatus;
 
     /** Returns information about "slotnumber" as an object */
     get_slot_info(slotnumber: number): Readonly<SlotInfo>;
@@ -140,6 +140,10 @@ declare const mxserver: {
 
 }
 
+type SlotIgnore = "ALL" | "SPECS" | "NONE";
+type SlotRank = "Nobody" | "Marshal" | "Admin";
+type SlotStatus = "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
+
 type SlotInfo = {
     bike: string;
     riderskin: string;
@@ -149,8 +153,8 @@ type SlotInfo = {
     uid: number;
     number: string;
     name: string;
-    status: "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
-    rank: "Nobody" | "Marshal" | "Admin",
+    status: SlotStatus;
+    rank: SlotRank,
     ping: number;
 }
 
@@ -171,9 +175,9 @@ type MXServerNumberArrayValues = {
 type MXServerStringName = "track_dir" | "track_name";
 type MXServerStringArrayValues = {
     'bikeinfo': string;
-    'ignore': 'ALL' | 'SPECS' | 'NONE';
-    'rank': 'Nobody' | 'Marshal' | 'Admin';
-    'status': 'Empty' | 'Reserved' | 'Spectator' | 'Player' | 'Zombie';
+    'ignore': SlotIgnore;
+    'rank': SlotRank;
+    'status': SlotStatus;
     'track_list': string;
 };
 
