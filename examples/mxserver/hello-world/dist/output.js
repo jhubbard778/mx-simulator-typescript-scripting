@@ -1,1 +1,5 @@
-mxserver.log("Hello world!");
+(function () {
+
+	mxserver.log("Hello world!");
+
+})();

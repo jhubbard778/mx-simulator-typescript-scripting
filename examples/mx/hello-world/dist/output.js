@@ -1,1 +1,5 @@
-mx.message("Hello world!");
+(function () {
+
+	mx.message("Hello world!");
+
+})();
