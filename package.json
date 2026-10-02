@@ -20,7 +20,7 @@
     "build:prod": "NODE_ENV=production rollup --config",
     "watch": "rollup --config --watch",
     "test": "vitest",
-    "format": "prettier --write \"src/**/*.{js,ts,svelte,css,html}\""
+    "format": "prettier --write \"src/**/*.{js,ts}\""
   },
   "dependencies": {
     "@rolldown/binding-linux-x64-gnu": "^1.0.3",
