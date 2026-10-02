@@ -4,8 +4,10 @@
     "@babel/preset-env": "^7.29.7",
     "@babel/preset-typescript": "^7.29.7",
     "@faker-js/faker": "^10.4.0",
+    "@rolldown/binding-linux-x64-gnu": "^1.0.3",
     "@rollup/plugin-alias": "^6.0.0",
     "@rollup/plugin-babel": "^7.0.0",
+    "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
@@ -21,9 +23,5 @@
     "watch": "rollup --config --watch",
     "test": "vitest",
     "format": "prettier --write \"src/**/*.{js,ts}\""
-  },
-  "dependencies": {
-    "@rolldown/binding-linux-x64-gnu": "^1.0.3",
-    "@rollup/plugin-commonjs": "^29.0.2"
   }
 }
