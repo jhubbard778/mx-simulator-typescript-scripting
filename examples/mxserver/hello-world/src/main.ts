@@ -1,1 +1,1 @@
-mxserver.log("Hello world!");
+mxserver.log('Hello world!');

@@ -39,7 +39,7 @@ declare const mxserver: {
     /** Sends script message "message" to the client in "slotnumber". */
     send_script_message(slotnumber: number, message: string): void;
 
-    /** Writes "message" into the server demo. */    
+    /** Writes "message" into the server demo. */
     write_demo_message(message: string): void;
 
     /** Writes script message "message" into the server demo. */
@@ -51,7 +51,7 @@ declare const mxserver: {
     /** Returns the number associated with "name" with optional array index
      * @remarks For `"erode"`, the returned value is 1024x the inputted value.
      * @remarks `"finish_time"` and related time args always return the value in game tic seconds
-    */
+     */
     get_number(name: MXServerNumberName): number;
     get_number(name: MXServerNumberNameTics): MXTics;
     get_number<T extends MXServerNumberArrayName>(name: T, index: number): MXServerNumberArrayValues[T];
@@ -63,10 +63,10 @@ declare const mxserver: {
     get_string<T extends MXServerStringArrayName>(name: T, index: number): MXServerStringArrayValues[T];
 
     /**
-    * ###################################################
-    * Callback Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Callback Functions
+     * ###################################################
+     */
 
     /**
      * This is called when a client connects to the server.
@@ -78,7 +78,7 @@ declare const mxserver: {
      * This is called when a client disconnects from the server.
      * @param slotnumber The client's slot number.
      * @remarks It is possible to get a disconnect without a corresponding connect
-     *  if the client fails to initialize completely. 
+     *  if the client fails to initialize completely.
      */
     disconnect_handler: (slotnumber: number) => void;
 
@@ -137,12 +137,11 @@ declare const mxserver: {
      * "slotnumber" is the client's slot number.  "message" is the message
      * that the client sent. */
     script_message_handler: (slotnumber: number, message: string) => void;
+};
 
-}
-
-type SlotIgnore = "ALL" | "SPECS" | "NONE";
-type SlotRank = "Nobody" | "Marshal" | "Admin";
-type SlotStatus = "Empty" | "Reserved" | "Spectator" | "Player" | "Zombie";
+type SlotIgnore = 'ALL' | 'SPECS' | 'NONE';
+type SlotRank = 'Nobody' | 'Marshal' | 'Admin';
+type SlotStatus = 'Empty' | 'Reserved' | 'Spectator' | 'Player' | 'Zombie';
 
 type SlotInfo = {
     bike: string;
@@ -154,33 +153,40 @@ type SlotInfo = {
     number: string;
     name: string;
     status: SlotStatus;
-    rank: SlotRank,
+    rank: SlotRank;
     ping: number;
-}
+};
 
-type MXServerNumberName = 'erode' | 'finish_laps' | 'first_lap_length'
-    | 'gate_count' | 'holeshot_index' | 'max_slots'
-    | 'normal_lap_length' | 'track_count' | 'ping';
+type MXServerNumberName =
+    | 'erode'
+    | 'finish_laps'
+    | 'first_lap_length'
+    | 'gate_count'
+    | 'holeshot_index'
+    | 'max_slots'
+    | 'normal_lap_length'
+    | 'track_count'
+    | 'ping';
 
 type MXServerNumberNameTics = 'drop_time' | 'finish_time' | 'race_time';
 
 type MXServerNumberArrayName = 'finish_laps_list' | 'finish_time_list' | 'muted' | 'uid';
 type MXServerNumberArrayValues = {
-    'finish_laps_list': number;
-    'finish_time_list': MXTics;
-    'muted': number;
-    'uid': number;
-}
+    finish_laps_list: number;
+    finish_time_list: MXTics;
+    muted: number;
+    uid: number;
+};
 
-type MXServerStringName = "track_dir" | "track_name";
+type MXServerStringName = 'track_dir' | 'track_name';
 type MXServerStringArrayValues = {
-    'bikeinfo': string;
-    'ignore': SlotIgnore;
-    'rank': SlotRank;
-    'status': SlotStatus;
-    'track_list': string;
+    bikeinfo: string;
+    ignore: SlotIgnore;
+    rank: SlotRank;
+    status: SlotStatus;
+    track_list: string;
 };
 
 type MXServerStringArrayName = keyof MXServerStringArrayValues;
 
-type MXTics = number & { readonly __brand: "MXTics" };
+type MXTics = number & { readonly __brand: 'MXTics' };

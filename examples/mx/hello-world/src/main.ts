@@ -1,1 +1,1 @@
-mx.message("Hello world!");
+mx.message('Hello world!');

@@ -10,9 +10,9 @@ export const setCurrentTimingGates = (): void => {
         // If we rewinded in a demo
         const isRewinded = timingGateIndex < previous;
         currentTimingIndices[slot] = timingGateIndex;
-        
+
         // Dont broadcast message if time was rewinded in demo
         if (isRewinded) continue;
         mx.message(`Slot ${slot} is at timing gate index ${timingGateIndex}!`);
     }
-}
+};

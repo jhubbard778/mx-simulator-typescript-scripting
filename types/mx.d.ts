@@ -1,17 +1,17 @@
 // Exposes the games global variables
 declare const mx: {
     /**
-    * ###################################################
-    * Variables
-    * ###################################################
-    */
+     * ###################################################
+     * Variables
+     * ###################################################
+     */
 
     /** The maximum number of slots. */
     readonly max_slots: number;
 
     /** The number of gates in the first lap. */
     readonly first_lap_length: number;
-    
+
     /**  The number of gates in any lap after lap 1. */
     readonly normal_lap_length: number;
 
@@ -24,17 +24,17 @@ declare const mx: {
     /** The time since the session started in seconds. */
     readonly seconds: number;
 
-    /** A random seed per session for repeatable random numbers 
+    /** A random seed per session for repeatable random numbers
      * Only available for snapshot versions 10-14-2023 and greater
      * 16 bit unsigned int
-    */
+     */
     readonly seed?: number;
 
     /**
-    * ###################################################
-    * Callback Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Callback Functions
+     * ###################################################
+     */
 
     /** This is called once per frame. "seconds" is the time since the session started in seconds. */
     frame_handler: (seconds: number) => void;
@@ -45,22 +45,21 @@ declare const mx: {
     /** This is called when a script message is received. "msg" is the message sent by
      *  mx.broadcast_script_message() with the player number prepended to it.
      *  The player number is the number of players with slot numbers that are less than the sender's slot number.
-    */
+     */
     script_message_handler: (msg: string) => void;
 
-
     /**
-    * ###################################################
-    * Billboard Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Billboard Functions
+     * ###################################################
+     */
 
     /** Finds the index of the first billboard that matches the texture.
      * @param texture the texture filename
      * @param start billboard index to start search at
      * @return billboard index if successful, otherwise -1
-    */
-    find_billboard(texture: string, start: string|number): number;
+     */
+    find_billboard(texture: string, start: string | number): number;
 
     /**
      * Adds a billboard
@@ -72,10 +71,7 @@ declare const mx: {
      * @param texture the texture filename
      * @return billboard index of -1 if billboard could not be added
      */
-    add_billboard(
-        x: number, y: number, z: number,
-        size: number, aspect: number, texture: string
-    ): number;
+    add_billboard(x: number, y: number, z: number, size: number, aspect: number, texture: string): number;
 
     /**
      * Sets billboard size
@@ -117,12 +113,11 @@ declare const mx: {
      */
     move_billboard_absolute(index: number, x: number, y: number, z: number): Bit;
 
-
     /**
-    * ###################################################
-    * Statue Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Statue Functions
+     * ###################################################
+     */
 
     /**
      * Adds a statue. This function only works during the initial load and will fail if called from a hook afterwards.
@@ -135,10 +130,7 @@ declare const mx: {
      * @param shape The collision/shape filename (currently ignored)
      * @return The statue index or -1 if the statue couldn't be added
      */
-    add_statue(
-        x: number, y: number, z: number, angle: number,
-        model: string, texture: string, shape: string
-    ): number;
+    add_statue(x: number, y: number, z: number, angle: number, model: string, texture: string, shape: string): number;
 
     /**
      * Finds the index of the first statue that matches the model and texture.
@@ -175,11 +167,10 @@ declare const mx: {
     move_statue_absolute(index: number, x: number, y: number, z: number, r: Mat3x3): Bit;
 
     /**
-    * ###################################################
-    * Pose Functions
-    * ###################################################
-    */
-
+     * ###################################################
+     * Pose Functions
+     * ###################################################
+     */
 
     /**
      * Creates a animation pose sequence.
@@ -209,12 +200,11 @@ declare const mx: {
      */
     pose_statue_from_sequence(index: number, sequence: number, frame: number): Bit;
 
-
     /**
-    * ###################################################
-    * Texture Rendering Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Texture Rendering Functions
+     * ###################################################
+     */
 
     /**
      * Clears and prepares an animated texture for drawing.
@@ -244,23 +234,26 @@ declare const mx: {
      * @return 1 if successful, otherwise 0
      */
     paste_custom_frame(
-        tid: number, frame: number,
-        sx: number, sy: number,
-        dx: number, dy: number,
-        w: number, h: number
+        tid: number,
+        frame: number,
+        sx: number,
+        sy: number,
+        dx: number,
+        dy: number,
+        w: number,
+        h: number
     ): Bit;
 
-
     /**
-    * ###################################################
-    * Sound Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Sound Functions
+     * ###################################################
+     */
 
     /**
      * Adds a sound. Note: Max number of sound is 512 before it starts failing
      * @param filename is the filename for the sound samples which should be in headerless signed 16 bit format.
-     * @return The sound index if successful, or -1 if the sound couldn't be added 
+     * @return The sound index if successful, or -1 if the sound couldn't be added
      */
     add_sound(filename: string): number;
 
@@ -322,12 +315,11 @@ declare const mx: {
      */
     stop_sound(index: number): Bit;
 
-
     /**
-    * ###################################################
-    * Misc Functions
-    * ###################################################
-    */
+     * ###################################################
+     * Misc Functions
+     * ###################################################
+     */
 
     /** Returns the gate number associated with "timing_index".
      * @param timing_index The timing index
@@ -343,7 +335,7 @@ declare const mx: {
 
     /**
      * Stores the camera position in "p" and the camera orientation in "r".
-     * @param p The variable to store the 3 element position array into 
+     * @param p The variable to store the 3 element position array into
      * @param r The variable to store the 3x3 rotation matrix as a 9 element array into
      * @return void
      */
@@ -485,29 +477,28 @@ declare const mx: {
      *  of the sender to the message and send the resulting message to all clients.
      *  The player number is the number of players with slot numbers that
      *  are less than the sender's slot number.
-    */
+     */
     broadcast_script_message(message: string): void;
 
     /** Returns the zero based lap number for "timing_index", where "timing_index" is the number of gates passed. */
     index_to_lap(timing_index: number): number;
 
-    /** Returns the timing index at the start of the specified lap. */    
+    /** Returns the timing index at the start of the specified lap. */
     lap_to_index(lap: number): number;
 
     /** Returns the position of the bike in the specified slot in a 3 element array. Returns null for an invalid slot. */
-    get_position(slot: number): Vec3|null;
+    get_position(slot: number): Vec3 | null;
 
     /** Returns the velocity of the bike in the specified slot in a 3 element array. Returns null for an invalid slot. */
-    get_velocity(slot: number): Vec3|null;
+    get_velocity(slot: number): Vec3 | null;
 
     /** Returns an array of objects representing the running order.
      * Each object has the following properties:
      *  "slot" - the slot number,
      *  "position" - the number of gates passed,
      *  "time" - the time when the last gate was hit in seconds.
-    */
+     */
     get_running_order(): ReadonlyArray<RunningOrderPlayer>;
-    
 };
 
 type MXSAnimation = {
@@ -515,18 +506,14 @@ type MXSAnimation = {
     bone_count: number;
     rest_centers: number[];
     poses: MXSPose[];
-}
+};
 
 type MXSPose = {
     centers: number[];
     rotations: number[];
-}
+};
 
-type Mat3x3 = [
-    number, number, number,
-    number, number, number,
-    number, number, number
-]
+type Mat3x3 = [number, number, number, number, number, number, number, number, number];
 
 type Vec2 = [number, number];
 type Vec3 = [number, number, number];
@@ -535,9 +522,9 @@ type Bit = 0 | 1;
 
 type RunningOrderPlayer = {
     /** The players slot number */
-    slot: number,
+    slot: number;
     /** The player's position in the timing index */
-    position: number,
+    position: number;
     /** The player's last hit timing gate time in seconds */
-    time: number
-}
+    time: number;
+};

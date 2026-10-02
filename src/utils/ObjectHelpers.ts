@@ -1,3 +1,3 @@
 export const isObjectLiteral = (obj: any): obj is object => {
-  return Object.prototype.toString.call(obj) === '[object Object]';
-}
+    return Object.prototype.toString.call(obj) === '[object Object]';
+};
