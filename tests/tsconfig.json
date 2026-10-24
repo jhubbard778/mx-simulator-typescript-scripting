@@ -4,7 +4,11 @@
         "target": "ESNext",
         "module": "ESNext",
         "lib": ["ESNext"],
-        "types": ["vitest/globals", "node"]
+        "types": ["vitest/globals", "node"],
+        "declaration": false,
+        "declarationMap": false,
+        "declarationDir": null,
+        "composite": false
     },
     "include": ["./**/*", "../src/**/*", "../types/**/*"]
 }

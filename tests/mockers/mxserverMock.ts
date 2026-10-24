@@ -1,5 +1,6 @@
 import { MXTicConverter } from '@/utils/mxserver/TicConversions';
 import { faker } from '@faker-js/faker/locale/en';
+import { Mock } from 'vitest';
 import { emptySlotInfo, MAX_SLOTS, mockPlayers, mockTrackData } from './mockServerData';
 
 const firstLapLength = faker.number.int({ min: 7, max: 34 });
@@ -42,7 +43,9 @@ const serverData = {
     } satisfies { [K in MXServerStringArrayName]: MXServerStringArrayValues[K][] },
 };
 
-export const mxserverMock = {
+type AnyFn = (...args: any[]) => any;
+
+export const mxserverMock: Record<string, Mock<AnyFn> | AnyFn | number | string> = {
     max_slots: MAX_SLOTS,
 
     get_uid: vi.fn().mockImplementation((slot: number): number => {

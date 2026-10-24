@@ -1,10 +1,13 @@
 import { allBikeModels } from '@/utils/BikeHelpers';
 import { faker } from '@faker-js/faker/locale/en';
+import { Mock } from 'vitest';
 
 const firstLapLength = faker.number.int({ min: 7, max: 34 });
 const normalLapLength = faker.number.int({ min: 26, max: 50 });
 
-export const mxMock = {
+type AnyFn = (...args: any[]) => any;
+
+export const mxMock: Record<string, Mock<AnyFn> | AnyFn | number | string> = {
     // Variables
     max_slots: 160,
     first_lap_length: firstLapLength,
